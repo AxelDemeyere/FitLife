@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Reservation extends Model
 {
@@ -14,12 +15,12 @@ class Reservation extends Model
         'creneaux_id',
     ];
 
-    public function user()
+    public function user() : BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class,  'user_id');
     }
 
-    public function creneaux()
+    public function creneaux() : BelongsTo
     {
         return $this->belongsTo(Creneau::class, 'creneaux_id');
     }

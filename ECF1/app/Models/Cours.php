@@ -13,4 +13,9 @@ class Cours extends Model
         'nom',
         'description',
     ];
+
+    public function creneaux()
+    {
+        return $this->hasMany(Creneau::class);
+    }
 }

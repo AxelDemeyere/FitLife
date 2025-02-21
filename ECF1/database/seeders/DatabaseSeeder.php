@@ -2,9 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\Cours;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,11 +15,19 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        Cours::factory(15)->create();
+        User::create([
+            'name' => 'Axel Demeyere',
+            'email' => 'axel.demeyere@example.com',
+            'password' => Hash::make('password'),
+            'is_admin' => true
+        ]);
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        $this->call([
+            CreneauSeeder::class,
         ]);
     }
+
+
+
 }

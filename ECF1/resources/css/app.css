@@ -17,3 +17,39 @@ header h1 {
 header .logo {
     height: 100px;
 }
+
+.content-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.content-wrapper .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: lightcyan;
+    height: 200px;
+    width: 200px;
+    padding: 1rem;
+}
+
+.content-wrapper .content p {
+    font-size: 2rem;
+    padding-bottom: 2rem;
+}
+
+.content-wrapper .content a {
+    padding: 0.5rem 1rem;
+    background-color: #205EA7;
+    border-radius: 5px;
+    text-decoration: none;
+    color: white;
+    text-transform: uppercase;
+    font-weight: bold;
+
+}
+

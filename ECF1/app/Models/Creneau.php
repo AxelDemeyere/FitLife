@@ -10,6 +10,7 @@ class Creneau extends Model
 {
     use HasFactory;
 
+
     protected $table = 'creneaux';
 
     protected $fillable = [
@@ -27,5 +28,9 @@ class Creneau extends Model
         return [
             'date_heure' => 'datetime',
         ];
+    }
+    public function getFormattedDateAttribute() : string
+    {
+        return $this->date_heure->format('d/m/Y');
     }
 }

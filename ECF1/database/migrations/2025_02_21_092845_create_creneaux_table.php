@@ -11,7 +11,7 @@ return new class extends Migration {
         Schema::create('creneaux', function (Blueprint $table) {
             $table->id();
             $table->dateTime('date_heure');
-            $table->foreignIdFor(Cours::class, 'id_cours')->constrained('cours');
+            $table->foreignIdFor(Cours::class)->constrained('cours');
             $table->timestamps();
         });
     }

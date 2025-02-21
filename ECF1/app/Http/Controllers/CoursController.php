@@ -21,12 +21,14 @@ class CoursController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'nom' => ['required', 'string', 'max:255'],
-            'description' => ['required', 'string', 'max:255'],
+            'nom' => 'required|string|max:255',
+            'description' => 'required|string'
         ]);
 
         Cours::create($validated);
-        return redirect('/accueil')->with('success', 'Cours créé avec succès');
+
+        return redirect()->route('admin.dashboard')
+            ->with('success', 'Le cours a été créé avec succès.');
     }
 
     public function show($id)
@@ -54,11 +56,11 @@ class CoursController extends Controller
         return redirect('/accueil')->with('success', 'Cours mis à jour avec succès');
     }
 
-    public function destroy($id)
+    public function destroy(Cours $cours)
     {
-        $cours = Cours::findOrFail($id);
         $cours->delete();
 
-        return redirect('/accueil')->with('success', 'Cours supprimé avec succès');
+        return redirect()->route('admin.dashboard')
+            ->with('success', 'Le cours a été supprimé avec succès.');
     }
 }

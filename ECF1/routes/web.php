@@ -24,21 +24,24 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::post('/reservation', [ReservationController::class, 'store'])->name('reservation.store');
+
+
+    Route::get('/reservation/{cours}', [ReservationController::class, 'create'])->name('reservation.create');
+    Route::post('/reservation', [ReservationController::class, 'store'])->name('reservation.store');
+    Route::delete('/reservation/{reservation}', [ReservationController::class, 'destroy'])->name('reservation.destroy');
+    Route::put('/reservation/{reservation}', [ReservationController::class, 'update'])->name('reservation.update');
+    Route::get('/reservation/{reservation}/edit', [ReservationController::class, 'edit'])->name('reservation.edit');
+    Route::get('/dashboard', function () {
+        $reservations = auth()->user()->reservations()
+            ->with(['cours', 'creneaux'])
+            ->latest()
+            ->get();
+
+        return view('dashboard', compact('reservations'));
+    })->middleware(['auth', 'verified'])->name('dashboard');
 });
 
-Route::get('/reservation/{cours}', [ReservationController::class, 'create'])->name('reservation.create');
-Route::post('/reservation', [ReservationController::class, 'store'])->name('reservation.store');
-Route::delete('/reservation/{reservation}', [ReservationController::class, 'destroy'])->name('reservation.destroy');
-Route::put('/reservation/{reservation}', [ReservationController::class, 'update'])->name('reservation.update');
-Route::get('/reservation/{reservation}/edit', [ReservationController::class, 'edit'])->name('reservation.edit');
-Route::get('/dashboard', function () {
-    $reservations = auth()->user()->reservations()
-        ->with(['cours', 'creneaux'])
-        ->latest()
-        ->get();
 
-    return view('dashboard', compact('reservations'));
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 
 

@@ -3,8 +3,7 @@
 use App\Http\Controllers\CoursController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReservationController;
-use App\Models\Cours;
-use Illuminate\Support\Facades\Route;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -18,14 +17,20 @@ Route::prefix('cours')->group(function () {
     Route::get('/{cours}', [CoursController::class, 'show'])->name('cours.show');
 });
 
-// Ajustons les routes de réservation
+
 Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
     Route::post('/reservation', [ReservationController::class, 'store'])->name('reservation.store');
 });
 
 Route::get('/reservation/{cours}', [ReservationController::class, 'create'])->name('reservation.create');
 Route::post('/reservation', [ReservationController::class, 'store'])->name('reservation.store');
-
+Route::delete('/reservation/{reservation}', [ReservationController::class, 'destroy'])->name('reservation.destroy');
+Route::put('/reservation/{reservation}', [ReservationController::class, 'update'])->name('reservation.update');
+Route::get('/reservation/{reservation}/edit', [ReservationController::class, 'edit'])->name('reservation.edit');
 Route::get('/dashboard', function () {
     $reservations = auth()->user()->reservations()
         ->with(['cours', 'creneaux'])
@@ -35,10 +40,6 @@ Route::get('/dashboard', function () {
     return view('dashboard', compact('reservations'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+
 
 require __DIR__.'/auth.php';
